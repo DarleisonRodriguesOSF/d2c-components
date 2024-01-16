@@ -1,0 +1,37 @@
+<template>
+    <div class={messageStyle}>
+        <template if:true={showComponent}>
+            <nav class="accordion arrows">
+                <div>
+                    <input type="checkbox" checked="checked" name="accordion" id="order" />
+                    <section class="box">
+                        <div class="box-content open">
+                            <p class="order-info"><strong id="orderNumberLabel">Order Number:</strong> <lightning-formatted-rich-text value={orderNumber}></lightning-formatted-rich-text></p>
+                            <p class="order-info"><strong id="orderStatusLabel">Order Status:</strong> <lightning-formatted-rich-text value={orderStatus}></lightning-formatted-rich-text></p>
+                        </div>
+                    </section>
+                </div>
+                <template for:each={processedData} for:item="trackingData">
+                    <div key={trackingData.index}>
+                        <input type="checkbox" checked="checked" name="accordion" id={trackingData.index} />
+                        <section class="box">
+                            <label class="box-title" for={trackingData.index}>{trackingData.header}</label>
+                            <div class="box-content open">
+                                <p class="tracking-info"><strong id={trackingData.index + 'TrackingURLLabel'}>Tracking URL:</strong> <lightning-formatted-rich-text value={trackingData.url}></lightning-formatted-rich-text></p>
+                                <ul>
+                                    <strong id={trackingData.index + 'OrderItemsLabel'}>Order Items:</strong>
+                                    <template for:each={trackingData.items} for:item="item">
+                                        <li key={item}>{item}</li>
+                                    </template>
+                                </ul>
+                            </div>
+                        </section>
+                    </div>
+                </template>
+            </nav>
+        </template>
+        <template if:false={showComponent}>
+            <lightning-formatted-rich-text value={messageContent.value}></lightning-formatted-rich-text>
+        </template>
+    </div>
+</template>
